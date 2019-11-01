@@ -33,11 +33,11 @@ void recursivePrint(flags_t &flags, std::vector<tuple> &regulars, std::vector<tu
 
     std::vector<tuple> newFiles;
     //Output for current dir
-    if(flags.D) for(auto &d:dirs){
-            std::cout<<"/"<<std::get<0>(d).substr(std::get<0>(d).find_last_of("/") + 1);
-            if(flags.l) std::cout<<" "<<std::get<1>(d)<<" "<<std::get<2>(d);
-            std::cout<<std::endl;
-        }
+    if(flags.D) for(auto &d:dirs) {
+        std::cout<<"/"<<std::get<0>(d).substr(std::get<0>(d).find_last_of("/") + 1);
+        if(flags.l) std::cout<<" "<<std::get<1>(d)<<" "<<std::get<2>(d);
+        std::cout<<std::endl;
+    }
 
     for(auto &r:regulars){
         if(boost::filesystem::is_directory(BPath(std::get<0>(r)))){

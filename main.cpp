@@ -1,6 +1,7 @@
-#include "config.h"
-#include "sort.h"
-#include "print.h"
+#include "headers/config.h"
+#include "headers/sort.h"
+#include "headers/print.h"
+#include "headers/wildcards.h"
 
 
 
@@ -76,7 +77,17 @@ int main(int argc, char* argv[]) {
             files.emplace_back(tuple(argv[i], filesize(argv[i]), p_time));
         }
         else{
-            std::cerr<<argv[i]<<" file don`t exist"<<std::endl;
+            std::vector<std::string> buf{std::string(argv[i])};
+            std::vector<std::string> wild_cards = parse_args(buf);
+            if (wild_cards.empty())
+                std::cerr<<argv[i]<<" file don`t exist"<<std::endl;
+            else{
+                for (auto &file:wild_cards){
+                    time_t sys_time{ boost::filesystem::last_write_time(BPath(argv[i])) };
+                    boost::posix_time::ptime p_time{ boost::posix_time::from_time_t(sys_time) };
+                    files.emplace_back(tuple(argv[i], filesize(argv[i]), p_time));
+                }
+            }
         }
     }
     if(files.empty()){

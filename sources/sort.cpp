@@ -4,7 +4,7 @@
 
 #include "sort.h"
 #include "print.h"
-#include <filesystem>
+#include <experimental/filesystem>
 
 
 bool sortByName(tuple first, tuple second){return (std::get<0>(first).compare(std::get<0>(second)))<0;}
@@ -56,9 +56,9 @@ std::vector<std::vector<tuple>> sort(flags_t &flags, std::vector<tuple> &files, 
             //symlink
             if(boost::filesystem::is_symlink(BPath(std::get<0>(f)))){if(flags.F) std::get<0>(f)+="@";}
             //fifo
-            else if(std::filesystem::is_fifo(std::filesystem::path(std::get<0>(f)))) std::get<0>(f)+="|";
+            else if(std::experimental::filesystem::is_fifo(std::experimental::filesystem::path(std::get<0>(f)))) std::get<0>(f)+="|";
             //socket
-            else if(std::filesystem::is_socket(std::filesystem::path(std::get<0>(f)))) std::get<0>(f)+="=";
+            else if(std::experimental::filesystem::is_socket(std::experimental::filesystem::path(std::get<0>(f)))) std::get<0>(f)+="=";
                 //executable
             else if(!access(std::get<0>(f).c_str(), X_OK) && !boost::filesystem::is_directory(BPath(std::get<0>(f)))){if(flags.F) std::get<0>(f)+="*";}
                 //other
