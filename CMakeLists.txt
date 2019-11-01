@@ -5,6 +5,7 @@ find_package(Boost COMPONENTS system filesystem date_time REQUIRED)
 INCLUDE_DIRECTORIES( ${Boost_INCLUDE_DIR} )
 
 set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 add_executable(myls main.cpp config.h sort.cpp sort.h print.cpp print.h)
-target_link_libraries(myls  boost_system boost_filesystem readline)
+target_link_libraries(myls  boost_system boost_filesystem stdc++fs)
